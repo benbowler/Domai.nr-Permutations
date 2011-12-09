@@ -1,0 +1,42 @@
+<script type="text/javascript">
+	document.write('Domain Permutations Generator<br />');
+	
+	var test = apirequest("benbowler");
+	document.write(test);
+	
+	var keywords = "music,tune,track,sound,cloud";
+	var base = "cloud,authority,backbone,basis,core,essence,essential,evidence,foundation,fundamental,groundwork,heart,important part,infrastructure,key,origin,primary element,principal,principle,root,source,underpinning";
+	
+	var keywords = keywords.split(",");
+	var base = base.split(",");
+	
+	for(var keyword in keywords) {
+		for(var bas in base) {
+			var permutation = keywords[keyword]+base[bas];
+			document.write(permutation);
+			document.write('<br />');
+		}
+	}
+	
+	function apirequest(domain)
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if(xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("GET","http://domai.nr/api/json/search?q="+domain,true);
+		xmlhttp.send();
+	}
+	
+</script>
+
+<div id="myDiv"></div>
