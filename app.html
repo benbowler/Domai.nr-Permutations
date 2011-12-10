@@ -1,8 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Domai.nr Permutations</title>
+	
+<script type="text/javascript" src="jquery.jsonp-2.1.4.min.js"></script>
 <script type="text/javascript">
 	document.write('Domain Permutations Generator<br />');
 	
-	var test = apirequest("benbowler");
-	document.write(test);
+	document.write(apirequest("benbowler"));
 	
 	var keywords = "music,tune,track,sound,cloud";
 	var base = "cloud,authority,backbone,basis,core,essence,essential,evidence,foundation,fundamental,groundwork,heart,important part,infrastructure,key,origin,primary element,principal,principle,root,source,underpinning";
@@ -13,15 +19,16 @@
 	for(var keyword in keywords) {
 		for(var bas in base) {
 			var permutation = keywords[keyword]+base[bas];
-			document.write(permutation);
-			document.write('<br />');
+			var permutationr = base[bas]+keywords[keyword];
+			//document.write(permutation);
+			//document.write('<br />');
 		}
 	}
 	
 	function apirequest(domain)
 	{
 		var xmlhttp;
-		if (window.XMLHttpRequest)
+		if(window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		} else {// code for IE6, IE5
@@ -30,13 +37,53 @@
 		xmlhttp.onreadystatechange=function() {
 			if(xmlhttp.readyState==4 && xmlhttp.status==200)
 			{
-				document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+				document.getElementById('response').innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("GET","http://domai.nr/api/json/search?q="+domain,true);
+		xmlhttp.open("GET","http://google.com",true);
 		xmlhttp.send();
 	}
 	
+	
+	/**
+ * Function : dump()
+ * Arguments: The data - array,hash(associative array),object
+ *    The level - OPTIONAL
+ * Returns  : The textual representation of the array.
+ * This function was inspired by the print_r function of PHP.
+ * This will accept some data as the argument and return a
+ * text that will be a more readable version of the
+ * array/hash/object that is given.
+ * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
+ */
+function dump(arr,level) {
+	var dumped_text = "";
+	if(!level) level = 0;
+	
+	//The padding given at the beginning of the line.
+	var level_padding = "";
+	for(var j=0;j<level+1;j++) level_padding += "    ";
+	
+	if(typeof(arr) == 'object') { //Array/Hashes/Objects 
+		for(var item in arr) {
+			var value = arr[item];
+			
+			if(typeof(value) == 'object') { //If it is an array,
+				dumped_text += level_padding + "'" + item + "' ...\n";
+				dumped_text += dump(value,level+1);
+			} else {
+				dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+			}
+		}
+	} else { //Stings/Chars/Numbers etc.
+		dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+	}
+	return dumped_text;
+}
+	
 </script>
-
-<div id="myDiv"></div>
+	</head>
+	<body>
+		<div id="response">Loading…</div>
+	</body>
+</html>
